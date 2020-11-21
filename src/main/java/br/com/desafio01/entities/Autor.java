@@ -1,9 +1,12 @@
 package br.com.desafio01.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 public class Autor {
@@ -25,6 +28,9 @@ public class Autor {
     @NotBlank
     @Size(max = 400)
     private String descricao;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @Deprecated
     public Autor () {}
