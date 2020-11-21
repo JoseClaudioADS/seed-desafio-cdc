@@ -1,5 +1,6 @@
 package br.com.desafio01.features.cadastrarautor;
 
+import br.com.desafio01.common.validators.UniqueValidator;
 import br.com.desafio01.entities.Autor;
 
 import javax.validation.constraints.Email;
@@ -12,6 +13,7 @@ public class CadastrarAutorFormObject {
     private String nome;
     @NotBlank
     @Email
+    @UniqueValidator(entidade = Autor.class, propriedade = "email")
     private String email;
     @NotBlank
     @Size(max = 400)
