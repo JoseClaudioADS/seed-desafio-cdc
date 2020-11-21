@@ -1,6 +1,6 @@
-package br.com.desafio01.features.cadastrarautor;
+package br.com.desafio01.features.cadastrarcategoria;
 
-import br.com.desafio01.repositories.AutoresRepository;
+import br.com.desafio01.repositories.CategoriasRepository;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
@@ -13,29 +13,31 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Path("/autores")
+@Path("/categorias")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CadastrarAutorResource {
+public class CadastrarCategoriaResource {
 
     private Validator validator;
 
-    private AutoresRepository autoresRepository;
+    private CategoriasRepository categoriasRepository;
 
-    public CadastrarAutorResource(AutoresRepository autoresRepository, Validator validator) {
-        this.autoresRepository = autoresRepository;
+    public CadastrarCategoriaResource(CategoriasRepository categoriasRepository, Validator validator) {
+        this.categoriasRepository = categoriasRepository;
         this.validator = validator;
     }
 
     @POST
     @Transactional
-    public Response cadastrar(CadastrarAutorFormObject cadastrarAutorFormObject) {
-        Set<String> mensagens = validator.validate(cadastrarAutorFormObject).stream().map(ConstraintViolation::getMessage)
+    public Response cadastrar (CadastrarCategoriaFormObject cadastrarCategoriaFormObject) {
+        Set<String> mensagens = validator.validate(cadastrarCategoriaFormObject).stream().map(ConstraintViolation::getMessage)
                 .collect(Collectors.toSet());
         if (mensagens.size() > 0) {
             throw new BadRequestException(Arrays.toString(mensagens.toArray()));
         }
-        autoresRepository.persist(cadastrarAutorFormObject.toEntity());
+        categoriasRepository.persist(cadastrarCategoriaFormObject.toEntity());
         return Response.ok().build();
     }
+
+
 }

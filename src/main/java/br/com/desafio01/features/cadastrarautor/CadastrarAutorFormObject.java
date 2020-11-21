@@ -20,8 +20,7 @@ public class CadastrarAutorFormObject {
     private String descricao;
 
     public Autor toEntity() {
-        Autor novoAutor = new Autor(nome, email.toLowerCase(), descricao);
-        return novoAutor;
+        return new Autor(nome, email.toLowerCase(), descricao);
     }
 
     public void setNome(String nome) {
