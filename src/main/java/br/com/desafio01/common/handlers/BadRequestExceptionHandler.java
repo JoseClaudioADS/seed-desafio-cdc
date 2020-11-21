@@ -7,7 +7,7 @@ import javax.ws.rs.ext.Provider;
 import java.util.Set;
 
 @Provider
-public class ExceptionHandler implements ExceptionMapper<BadRequestException> {
+public class BadRequestExceptionHandler implements ExceptionMapper<BadRequestException> {
     @Override
     public Response toResponse(BadRequestException exception) {
         ErrorHandlerVO responseEntity = new ErrorHandlerVO(Set.of(exception.getMessage()));
