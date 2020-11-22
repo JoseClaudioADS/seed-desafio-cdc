@@ -1,10 +1,8 @@
 package br.com.desafio01.features.cadastrarautor;
 
-import br.com.desafio01.repositories.AutoresRepository;
-
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,10 +18,10 @@ public class CadastrarAutorResource {
 
     private Validator validator;
 
-    private AutoresRepository autoresRepository;
+    private EntityManager entityManager;
 
-    public CadastrarAutorResource(AutoresRepository autoresRepository, Validator validator) {
-        this.autoresRepository = autoresRepository;
+    public CadastrarAutorResource(EntityManager entityManager, Validator validator) {
+        this.entityManager = entityManager;
         this.validator = validator;
     }
 
@@ -35,7 +33,7 @@ public class CadastrarAutorResource {
         if (mensagens.size() > 0) {
             throw new BadRequestException(Arrays.toString(mensagens.toArray()));
         }
-        autoresRepository.persist(cadastrarAutorFormObject.toEntity());
+        entityManager.persist(cadastrarAutorFormObject.toEntity());
         return Response.ok().build();
     }
 }

@@ -1,10 +1,8 @@
 package br.com.desafio01.features.cadastrarcategoria;
 
-import br.com.desafio01.repositories.CategoriasRepository;
-
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,10 +18,10 @@ public class CadastrarCategoriaResource {
 
     private Validator validator;
 
-    private CategoriasRepository categoriasRepository;
+    private EntityManager entityManager;
 
-    public CadastrarCategoriaResource(CategoriasRepository categoriasRepository, Validator validator) {
-        this.categoriasRepository = categoriasRepository;
+    public CadastrarCategoriaResource(EntityManager entityManager, Validator validator) {
+        this.entityManager = entityManager;
         this.validator = validator;
     }
 
@@ -35,7 +33,7 @@ public class CadastrarCategoriaResource {
         if (mensagens.size() > 0) {
             throw new BadRequestException(Arrays.toString(mensagens.toArray()));
         }
-        categoriasRepository.persist(cadastrarCategoriaFormObject.toEntity());
+        entityManager.persist(cadastrarCategoriaFormObject.toEntity());
         return Response.ok().build();
     }
 
