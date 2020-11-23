@@ -33,7 +33,7 @@ public class Livro {
     private int numeroPaginas;
 
     @Future
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDate dataPublicacao;
 
     @ManyToOne(optional = false)
