@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,9 +38,13 @@ public class Livro {
     private LocalDate dataPublicacao;
 
     @ManyToOne(optional = false)
+    @NotNull
+    @Valid
     private Categoria categoria;
 
     @ManyToOne(optional = false)
+    @NotNull
+    @Valid
     private Autor autor;
 
     @Deprecated

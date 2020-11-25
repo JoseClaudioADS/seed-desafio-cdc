@@ -1,5 +1,7 @@
 package br.com.desafio01.features.cadastrarcategoria;
 
+import br.com.desafio01.common.ResourceUtils;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
@@ -28,8 +30,7 @@ public class CadastrarCategoriaResource {
     @POST
     @Transactional
     public Response cadastrar (CadastrarCategoriaFormObject cadastrarCategoriaFormObject) {
-        Set<String> mensagens = validator.validate(cadastrarCategoriaFormObject).stream().map(ConstraintViolation::getMessage)
-                .collect(Collectors.toSet());
+        Set<String> mensagens = ResourceUtils.validarFormObject(cadastrarCategoriaFormObject, validator);
         if (mensagens.size() > 0) {
             throw new BadRequestException(Arrays.toString(mensagens.toArray()));
         }

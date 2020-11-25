@@ -1,5 +1,7 @@
 package br.com.desafio01.features.cadastrarautor;
 
+import br.com.desafio01.common.ResourceUtils;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
@@ -28,12 +30,13 @@ public class CadastrarAutorResource {
     @POST
     @Transactional
     public Response cadastrar(CadastrarAutorFormObject cadastrarAutorFormObject) {
-        Set<String> mensagens = validator.validate(cadastrarAutorFormObject).stream().map(ConstraintViolation::getMessage)
-                .collect(Collectors.toSet());
+        Set<String> mensagens = ResourceUtils.validarFormObject(cadastrarAutorFormObject, validator);
         if (mensagens.size() > 0) {
             throw new BadRequestException(Arrays.toString(mensagens.toArray()));
         }
         entityManager.persist(cadastrarAutorFormObject.toEntity());
         return Response.ok().build();
     }
+
+
 }
